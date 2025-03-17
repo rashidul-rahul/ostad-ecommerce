@@ -17,7 +17,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-print("Base dir", BASE_DIR)
+# print("Base dir", BASE_DIR)
 
 
 # Quick-start development settings - unsuitable for production
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
 
     # firstparty
     'core.apps.users.apps.UsersConfig',
+    'core.apps.products.apps.ProductsConfig',
 
     # third party
     'rest_framework_simplejwt',

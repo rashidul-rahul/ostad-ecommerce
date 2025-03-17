@@ -13,7 +13,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('phone_number', 'password', 'password2')
+        fields = ('phone_number', 'password', 'password2', 'first_name', 'last_name')
 
     def validate_phone_number(self, value):
         if User.objects.filter(phone_number=value).exists():
