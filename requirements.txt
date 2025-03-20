@@ -2,3 +2,4 @@ django==4.2
 django-restframework
 djangorestframework-simplejwt
 Pillow
+gunicorn
