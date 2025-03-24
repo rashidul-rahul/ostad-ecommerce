@@ -3,3 +3,4 @@ django-restframework
 djangorestframework-simplejwt
 Pillow
 gunicorn
+environs
