@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     # firstparty
     'core.apps.users.apps.UsersConfig',
     'core.apps.products.apps.ProductsConfig',
+    'core.apps.orders.apps.OrdersConfig',
 
     # third party
     'rest_framework_simplejwt',
