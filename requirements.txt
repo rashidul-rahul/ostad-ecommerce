@@ -4,3 +4,4 @@ djangorestframework-simplejwt
 Pillow
 gunicorn
 environs
+django-cors-headers
