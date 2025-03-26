@@ -79,8 +79,8 @@ class OrderCreateSerializer(serializers.ModelSerializer):
         address_data = validated_data.pop('address')
         address_instance = Address.objects.create(**address_data)
 
-        request = self.context.get('request')
-        user = request.user if request and request.user.is_authenticated else None
+        user = validated_data.pop('user', None)
+        
 
         order = Order.objects.create(user=user, address=address_instance, **validated_data)
         return order

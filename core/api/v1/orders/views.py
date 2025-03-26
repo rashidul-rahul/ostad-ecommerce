@@ -1,7 +1,7 @@
 from rest_framework import generics, permissions, status
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from core.apps.orders.models import ShoppingCart, ShoppingCartItem, Order
+from core.apps.orders.models import ShoppingCart, ShoppingCartItem, Order, OrderItem
 from core.apps.orders.serializers import (
     ShoppingCartSerializer,
     AddToCartSerializer,
@@ -48,21 +48,27 @@ class OrderCreateAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         request = self.request
-        if request.user.is_authenticated:
-            serializer.save(user=request.user)
-        else:
-            serializer.save()
+        user = request.user if request.user.is_authenticated else None
+        cart = get_or_create_cart(request)
+        
+        # Create the order (this creates the address as well)
+        order = serializer.save(user=user)
+        
+        # Loop through cart items to create order items
+        for cart_item in cart.items.all():
+            OrderItem.objects.create(
+                order=order,
+                product_variant=cart_item.product_variant,
+                quantity=cart_item.quantity,
+                price=cart_item.product_variant.product.base_price  # or however you determine the price
+            )
+        
+        # Optionally update order total if needed
+        order.calculate_total()
+        
+        # Clear the shopping cart
+        cart.items.all().delete()
 
-    def get_or_create_cart(request):
-        if request.user.is_authenticated:
-            cart, _ = ShoppingCart.objects.get_or_create(user=request.user)
-        else:
-            session_key = request.session.session_key
-            if not session_key:
-                request.session.create()
-                session_key = request.session.session_key
-            cart, _ = ShoppingCart.objects.get_or_create(session_key=session_key, user=None)
-        return cart
 
 class AddToCartAPIView(APIView):
     permission_classes = []
