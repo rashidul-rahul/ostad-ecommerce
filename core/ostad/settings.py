@@ -188,3 +188,5 @@ CSRF_TRUSTED_ORIGINS = [
     'https://ostad.digifybd.com',
     'http://ostad.digifybd.com',
 ]
+
+CORS_ALLOW_CREDENTIALS = True
