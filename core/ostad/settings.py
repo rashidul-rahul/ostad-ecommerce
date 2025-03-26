@@ -180,3 +180,9 @@ AUTHENTICATION_BACKENDS = [
     'core.apps.users.backends.PhoneBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://ostad.digifybd.com',
+    'http://ostad.digifybd.com',
+]
